@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class GameLoop : MonoBehaviour
 {
-    //  TODO: Ball bounces off the paddle at an angle based on where the ball hit the paddle.
-
     #region Serialized Fields
 
     /// <summary>
@@ -42,7 +40,7 @@ public class GameLoop : MonoBehaviour
     /// <summary>
     /// The default ball speed factor.
     /// </summary>
-    private const float DefaultBallSpeedFactor = 5.0f;
+    private const float DefaultBallSpeedFactor = 3.0f;
 
     #endregion
     //---
@@ -62,9 +60,8 @@ public class GameLoop : MonoBehaviour
     {
 
         //--------------------------------------------------------------------------------------------------------------------------------------
-        paddle = Instantiate(prefabPaddle, new Vector3(0, 0, 0), Quaternion.identity);
-        GameObject newBall = Instantiate(prefabBall, new Vector3(0, 1, 0), Quaternion.identity);
-        newBall.GetComponent<Rigidbody2D>().AddForce(new(BallSpeedFactor, BallSpeedFactor), ForceMode2D.Impulse);
+        paddle = Instantiate(prefabPaddle, new Vector3(0, ScreenUtils.ScreenBottom + 2, 0), Quaternion.identity);
+        SpawnNewBall();
     }
 
     /// <summary>
@@ -72,5 +69,16 @@ public class GameLoop : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SpawnNewBall();
+        }
+    }
+
+
+    private void SpawnNewBall()
+    {
+        GameObject newBall = Instantiate(prefabBall, new Vector3(0, 1, 0), Quaternion.identity);
+        newBall.GetComponent<Rigidbody2D>().AddForce(new(BallSpeedFactor, BallSpeedFactor), ForceMode2D.Impulse);
     }
 }

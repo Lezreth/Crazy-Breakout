@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +208,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327311981babc064ebad4c519434f001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colThickness: 4
+  zPosition: 0
 --- !u!1 &808845610
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +232,6 @@ GameObject:
   m_Component:
   - component: {fileID: 808845611}
   - component: {fileID: 808845612}
-  - component: {fileID: 808845613}
   m_Layer: 0
   m_Name: Game Loop
   m_TagString: Untagged
@@ -254,18 +268,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPaddle: {fileID: 5029730734372288398, guid: 040ed03d58c983142beed22eeb81516f, type: 3}
   prefabBall: {fileID: 653076529749506551, guid: fb64aed537092a948b2b30011f372bc3, type: 3}
-  BallSpeedFactor: 5
---- !u!114 &808845613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808845610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327311981babc064ebad4c519434f001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colThickness: 4
-  zPosition: 0
+  BallSpeedFactor: 3

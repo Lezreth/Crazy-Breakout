@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// Adds colliders to the edge of the screen.  Add this script to the camera.
 /// </summary>
 public class ScreenColliders : MonoBehaviour
 {
@@ -19,39 +19,41 @@ public class ScreenColliders : MonoBehaviour
     /// </summary>
     [SerializeField] private float zPosition = 0f;
 
-    /// <summary>
-    /// The screen size
-    /// </summary>
-    private Vector2 screenSize;
-
     #endregion
+    //---
 
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
-    void Start()
+    private void Start()
     {
         //  Create a Dictionary to contain all our Objects/Transforms
+        //  Create our GameObjects and add their Transform components to the Dictionary we created above
         Dictionary<string, Transform> colliders = new()
         {
-            //  Create our GameObjects and add their Transform components to the Dictionary we created above
             { "Top", new GameObject().transform },
-            { "Bottom", new GameObject().transform },
+            //{ "Bottom", new GameObject().transform },
             { "Right", new GameObject().transform },
             { "Left", new GameObject().transform }
         };
 
         //  Grab the world-space position values of the start and end positions of the screen, then calculate the distance between them and store it as half,
         //  since we only need half that value for distance away from the camera to the edge
-        screenSize.x = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0))) * 0.5f;
-        screenSize.y = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height))) * 0.5f;
+        Vector2 screenSize = new()
+        {
+            x = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0))) * 0.5f,
+            y = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height))) * 0.5f
+        };
 
         //  For each Transform/Object in our Dictionary
         foreach (KeyValuePair<string, Transform> valPair in colliders)
         {
-            _ = valPair.Value.gameObject.AddComponent<BoxCollider2D>();  //  Add our colliders. Remove the "2D", if you would like 3D colliders.
+            //  Add the colliders.
+            _ = valPair.Value.gameObject.AddComponent<BoxCollider2D>();
+
             valPair.Value.name = valPair.Key + "Collider";  //  Set the object's name to it's "Key" name, and take on "Collider".  i.e: TopCollider
-            valPair.Value.parent = transform;  //  Make the object a child of whatever object this script is on (preferably the camera)
+            valPair.Value.tag = valPair.Value.name;  //  Set the object's tag to match it's name.
+            valPair.Value.parent = transform;  //  Make the object a child of whatever object this script is on (preferably the camera).
 
             valPair.Value.localScale = valPair.Key is "Left" or "Right"
                 ? new Vector3(colThickness, screenSize.y * 2, colThickness)
@@ -66,13 +68,6 @@ public class ScreenColliders : MonoBehaviour
         colliders["Right"].position = new Vector3(cameraPos.x + screenSize.x + (colliders["Right"].localScale.x * 0.5f), cameraPos.y, zPosition);
         colliders["Left"].position = new Vector3(cameraPos.x - screenSize.x - (colliders["Left"].localScale.x * 0.5f), cameraPos.y, zPosition);
         colliders["Top"].position = new Vector3(cameraPos.x, cameraPos.y + screenSize.y + (colliders["Top"].localScale.y * 0.5f), zPosition);
-        colliders["Bottom"].position = new Vector3(cameraPos.x, cameraPos.y - screenSize.y - (colliders["Bottom"].localScale.y * 0.5f), zPosition);
-    }
-
-    /// <summary>
-    /// Update is called once per frame.
-    /// </summary>
-    void Update()
-    {
+        //colliders["Bottom"].position = new Vector3(cameraPos.x, cameraPos.y - screenSize.y - (colliders["Bottom"].localScale.y * 0.5f), zPosition);
     }
 }
