@@ -48,6 +48,26 @@ public class GameLoop : MonoBehaviour
     //---
     #region Fields
 
+    /// <summary>
+    /// Flag for indicating if the game is running.
+    /// </summary>
+    private bool gameRunning = false;
+
+    /// <summary>
+    /// Keeps track of the number of balls on the field.
+    /// </summary>
+    private int ballCount = 0;
+
+    /// <summary>
+    /// The last time a ball was spawned.
+    /// </summary>
+    private float lastBallSpawnTime = 0.0f;
+
+    /// <summary>
+    /// The amount of time in seconds to wait before spawning another ball.
+    /// </summary>
+    private float nextBallSpawnTime = 0.0f;
+
     #endregion
     //---
     #region Constants
@@ -61,6 +81,21 @@ public class GameLoop : MonoBehaviour
     /// Padding between bricks so they are not jammed up against each other.
     /// </summary>
     private const float BrickBufferSpace = 0.1f;
+
+    /// <summary>
+    /// Tag identifier for the balls.
+    /// </summary>
+    private const string BallTag = "Ball";
+
+    /// <summary>
+    /// Tag identifier for the bricks.
+    /// </summary>
+    private const string BrickTag = "Brick";
+
+    /// <summary>
+    /// Tag identifier for the paddle.
+    /// </summary>
+    private const string PaddleTag = "Paddle";
 
     #endregion
     //---G
@@ -79,11 +114,7 @@ public class GameLoop : MonoBehaviour
     private void Start()
     {
         SpawnBricks();
-
         SpawnPaddle();
-
-        //  TODO  Delay before spawning the ball.
-        StartCoroutine(SpawnNewBall());
     }
 
     /// <summary>
@@ -91,22 +122,20 @@ public class GameLoop : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        //  TODO  Spawn balls periodically
-        //  TODO  Remove bottom screen barrier
-        //  TODO  Subtract one life when no more balls remain due to them leaving the bottom of the screen, game over on zero lives.
-        //  TODO  Make balls last a certain amount of time, then despawn.  Lives are not subtracted from balls expiring.
-        //  TODO  New balls are spawned randomly between 5 - 10 seconds
         //  TODO  Bricks have various effects that happen when they are destroyed
         //  TODO  Positions of bricks with effects and bricks without effects are randomized
 
+        if (gameRunning)
+        { _ = StartCoroutine(SpawnNewBall()); }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(SpawnNewBall());
+            gameRunning = true;
         }
     }
 
     /// <summary>
-    /// Spawn the bricks on the brick field.
+    /// Spawn the bricks on the brick field.  The brick field is the upper half of the screen.
     /// </summary>
     private void SpawnBricks()
     {
@@ -132,7 +161,7 @@ public class GameLoop : MonoBehaviour
         {
             for (int j = 0; j < maxVerticalBricks; j++)
             {
-                if (Random.value > 0.2f)
+                if (Random.value < 0.2f)
                 {
                     _ = Instantiate(prefabBrick, new(ScreenUtils.ScreenLeft + ((i + 1) * brickSize.x), ScreenUtils.ScreenTop - ((j + 1) * brickSize.y), 0), Quaternion.identity);
                 }
@@ -141,16 +170,40 @@ public class GameLoop : MonoBehaviour
     }
 
     /// <summary>
-    /// Create a new ball.
+    /// Create a new ball.  New balls wait one second before moving.
     /// </summary>
     private IEnumerator SpawnNewBall()
     {
+        //  Wait until the designated time to spawn a new ball.
+        if (Time.time - lastBallSpawnTime < nextBallSpawnTime) { yield break; }
+
+        //  Capture the spawn time and set the amount of time to wait before spawning the next ball.
+        lastBallSpawnTime = Time.time;
+        nextBallSpawnTime = Random.Range(5, 10);
+
         //  Spawn the ball below the brick field, but above the paddle location.
         GameObject newBall = Instantiate(prefabBall, new Vector3(0, ScreenUtils.ScreenBottom + (ScreenSectionHeight * 3), 0), Quaternion.identity);
+        newBall.GetComponent<BallControl>().OnBallDestroy += BallDestroyed;
+        ballCount++;
+        ScoreUI.text = "Balls in play: " + ballCount;
 
         //  Delay one second, then move the ball.
         yield return new WaitForSeconds(1);
         newBall.GetComponent<Rigidbody2D>().AddForce(new(BallSpeedFactor, -BallSpeedFactor), ForceMode2D.Impulse);
+    }
+
+    /// <summary>
+    /// Subtracts one from the ball counter when a ball is destroyed.
+    /// </summary>
+    private void BallDestroyed()
+    {
+        ballCount--;
+        ScoreUI.text = "Balls in play: " + ballCount;
+
+        if (ballCount == 0)
+        {
+            EndGame();
+        }
     }
 
     /// <summary>
@@ -159,5 +212,40 @@ public class GameLoop : MonoBehaviour
     private void SpawnPaddle()
     {
         _ = Instantiate(prefabPaddle, new Vector3(0, ScreenUtils.ScreenBottom + ScreenSectionHeight, 0), Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Ends the current game and returns to the menu screen.
+    /// </summary>
+    private void EndGame()
+    {
+        gameRunning = false;
+
+        //  Find and destroy any bricks that remain on the playing field.
+        GameObject[] bricks = GameObject.FindGameObjectsWithTag(BrickTag);
+        if (bricks.Length > 0)
+        {
+            for (int i = bricks.Length - 1; i >= 0; i--)
+            {
+                Destroy(bricks[i]);
+            }
+        }
+
+        //  Find and destroy any balls that remain on the playing field.
+        GameObject[] balls = GameObject.FindGameObjectsWithTag(BallTag);
+        if (balls.Length > 0)
+        {
+            for (int i = balls.Length - 1; i >= 0; i--)
+            {
+                Destroy(balls[i]);
+            }
+        }
+
+        //  Find and destroy the paddle.
+        GameObject paddle = GameObject.FindGameObjectWithTag(PaddleTag);
+        if (paddle != null)
+        {
+            Destroy(paddle);
+        }
     }
 }

@@ -7,12 +7,36 @@ using UnityEngine;
 /// </summary>
 public class BallControl : MonoBehaviour
 {
+    #region Fields
+
+    /// <summary>
+    /// The time this ball was created.
+    /// </summary>
+    private float startTime = 0.0f;
+
+    #endregion
+    //---
+    #region Delegates
+
+    /// <summary>
+    /// Delegate for notifying the control loop that this ball has been destroyed.
+    /// </summary>
+    public delegate void OnBallDestroyDelegate();
+
+    /// <summary>
+    /// Called when a ball is about to be destroyed because it expired or it left the playing field.
+    /// </summary>
+    public OnBallDestroyDelegate OnBallDestroy;
+    #endregion
+    //***G
+    #region Unity Methods
+
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
     void Start()
     {
-
+        startTime = Time.realtimeSinceStartup;
     }
 
     /// <summary>
@@ -20,11 +44,16 @@ public class BallControl : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (transform.position.y < ScreenUtils.ScreenBottom)
+        if (Time.realtimeSinceStartup - startTime > 20 || transform.position.y < ScreenUtils.ScreenBottom)
         {
+            OnBallDestroy();
             Destroy(gameObject);
         }
     }
+
+    #endregion
+    //---G
+    #region Methods
 
     /// <summary>
     /// Sets the direction the ball should travel while maintaining its current speed.
@@ -32,8 +61,10 @@ public class BallControl : MonoBehaviour
     /// <param name="Direction">The new direction the ball should travel in.</param>
     public void SetDirection(Vector2 Direction)
     {
-        Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
-        float speed = rigidbody2D.velocity.magnitude;
-        rigidbody2D.velocity = Direction * speed;
+        Rigidbody2D rigidBody2D = GetComponent<Rigidbody2D>();
+        float speed = rigidBody2D.velocity.magnitude;
+        rigidBody2D.velocity = Direction * speed;
     }
+
+    #endregion
 }

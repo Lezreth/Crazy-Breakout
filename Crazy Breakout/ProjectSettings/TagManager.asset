@@ -4,11 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TopCollider
-  - BottomCollider
-  - LeftCollider
-  - RightCollider
   - Ball
+  - Brick
+  - Paddle
   layers:
   - Default
   - TransparentFX
