@@ -26,7 +26,10 @@ public class BallControl : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Sets the direction the ball should travel while maintaining its current speed.
+    /// </summary>
+    /// <param name="Direction">The new direction the ball should travel in.</param>
     public void SetDirection(Vector2 Direction)
     {
         Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();

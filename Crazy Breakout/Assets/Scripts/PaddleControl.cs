@@ -69,22 +69,24 @@ public class PaddleControl : MonoBehaviour
     /// Called when a ball hits the paddle.
     /// </summary>
     /// <param name="collision">Collider of the ball that hit the paddle.</param>
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            //collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-
+            //  The horizontal position of the paddle and ball.
             float paddleXPosition = gameObject.transform.position.x;
             float ballXPosition = collision.transform.position.x;
 
+            //  Subtract the X positions and divide result by half the width of the paddle to normalize the distance the ball is from the center of the paddle.
             float distanceFromCenter = paddleXPosition - ballXPosition;
             float normalizedBallOffset = distanceFromCenter / paddleHalfWidth;
 
+            //  Calculate the new bounce angle, scaled to the distance the ball is from the center of the paddle.
             float angleOffset = normalizedBallOffset * BounceAngleHalfRange;
             float bounceAngle = (Mathf.PI / 2) + angleOffset;
             Vector2 bounceDirection = new(Mathf.Cos(bounceAngle), Mathf.Sin(bounceAngle));
 
+            //  Tell the ball to change direction.
             collision.gameObject.GetComponent<BallControl>().SetDirection(bounceDirection);
         }
     }
