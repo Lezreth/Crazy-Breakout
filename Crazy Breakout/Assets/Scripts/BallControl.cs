@@ -14,6 +14,11 @@ public class BallControl : MonoBehaviour
     /// </summary>
     private float startTime = 0.0f;
 
+    /// <summary>
+    /// The rigid body component of this ball.  Used to control the ball's speed.
+    /// </summary>
+    private Rigidbody2D ballRigidBody = null;
+
     #endregion
     //---
     #region Delegates
@@ -36,7 +41,10 @@ public class BallControl : MonoBehaviour
     /// </summary>
     void Start()
     {
+        //  Make note of the time this ball was spawned, because balls have a limited lifespan.
         startTime = Time.realtimeSinceStartup;
+        ballRigidBody = GetComponent<Rigidbody2D>();
+        _ = StartCoroutine(GetTheBallRolling());
     }
 
     /// <summary>
@@ -44,8 +52,10 @@ public class BallControl : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //  Destroy this ball if it is too old or has left the screen boundary.
         if (Time.realtimeSinceStartup - startTime > 20 || transform.position.y < ScreenUtils.ScreenBottom)
         {
+            //  But let any listeners know first!
             OnBallDestroy();
             Destroy(gameObject);
         }
@@ -54,6 +64,17 @@ public class BallControl : MonoBehaviour
     #endregion
     //---G
     #region Methods
+
+    /// <summary>
+    /// Gets the ball rolling.
+    /// </summary>
+    /// <returns>Yield to the caller so we are not needlessly burning cycles.</returns>
+    private IEnumerator GetTheBallRolling()
+    {
+        //  But wait for one second before pushing it.
+        yield return new WaitForSeconds(1);
+        ballRigidBody.AddForce(new(ConfigurationUtils.BallSpeedFactor, ConfigurationUtils.BallSpeedFactor), ForceMode2D.Impulse);
+    }
 
     /// <summary>
     /// Sets the direction the ball should travel while maintaining its current speed.

@@ -24,6 +24,11 @@ public static class ScreenUtils
     #region Properties
 
     /// <summary>
+    /// Divides the screen into eight sections for determining the spawn locations for the paddle and balls.
+    /// </summary>
+    public static float ScreenSectionHeight { get { return (Mathf.Abs(ScreenUtils.ScreenTop) + Mathf.Abs(ScreenUtils.ScreenBottom)) / 8; } }
+
+    /// <summary>
     /// Gets the left edge of the screen in world coordinates
     /// </summary>
     /// <value>left edge of the screen</value>
