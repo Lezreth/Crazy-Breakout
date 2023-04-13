@@ -171,3 +171,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8300502fd98051742afb1ef24923487f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: {fileID: 11400000, guid: ffe0e0048de0eb54a8d27a3fc9a83892, type: 2}
+  OnBrickDestroy: {fileID: 11400000, guid: 78801c6b3ac8bc9488b055f9bbee8d94, type: 2}

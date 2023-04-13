@@ -161,3 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e13f445e7ad0d4fbdc30c0d76810b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballCount: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
+  OnBallDestroy: {fileID: 11400000, guid: 314bdf4178317a54b8536fd41fbc7e92, type: 2}
