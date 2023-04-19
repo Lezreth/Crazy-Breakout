@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New BoolVariable", menuName = "Bool Variable", order = 51)]
+/// <summary>
+/// Create a new BoolVariable.
+/// </summary>
+[CreateAssetMenu(fileName = "New BoolVariable", menuName = "Scriptable Variables/Bool Variable", order = 51)]
 public class BoolVariable : ScriptableObject
 {
     /// <summary>

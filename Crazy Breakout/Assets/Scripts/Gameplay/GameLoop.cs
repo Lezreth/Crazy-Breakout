@@ -36,12 +36,17 @@ public class GameLoop : MonoBehaviour
     /// <summary>
     /// Number of balls in play.
     /// </summary>
-    [SerializeField] private IntVariable ballCount;
+    [SerializeField] private ResettableIntVariable ballCount;
 
     /// <summary>
     /// Flag for indicating if the game is running.
     /// </summary>
     [SerializeField] private BoolVariable gameRunning;
+
+    /// <summary>
+    /// Tag for identifying the paddle.
+    /// </summary>
+    [SerializeField] private StringConstant paddleTag;
 
     #endregion
     //***G
@@ -70,8 +75,8 @@ public class GameLoop : MonoBehaviour
         //  TODO  Bricks have various effects that happen when they are destroyed
         //  TODO  Positions of bricks with effects and bricks without effects are randomized
         //  TODO  Implement a configuration file for saving hard-coded values
-        //  TODO  HUD: Track and display the number of balls the player has left
-        //  TODO  HUD: Track and display the player's score
+        //  TODO  Add a brick counter to keep track of the number of bricks on the screen and end the game when they are all gone
+        //  TODO  Create a level generation system
 
         if (Input.GetKeyDown(KeyCode.Space) && !gameRunning.Value)
         {
@@ -113,7 +118,7 @@ public class GameLoop : MonoBehaviour
 
 
         //  Find and destroy the paddle.
-        GameObject paddle = GameObject.FindGameObjectWithTag(ConfigurationUtils.PaddleTag);
+        GameObject paddle = GameObject.FindGameObjectWithTag(paddleTag.Value);
         if (paddle != null)
         {
             Destroy(paddle);

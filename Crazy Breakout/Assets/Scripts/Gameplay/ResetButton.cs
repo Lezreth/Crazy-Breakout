@@ -9,12 +9,12 @@ public class ResetButton : MonoBehaviour
     /// <summary>
     /// The number of balls in play.
     /// </summary>
-    [SerializeField] private IntVariable ballsInPlay;
+    [SerializeField] private ResettableIntVariable ballsInPlay;
 
     /// <summary>
     /// The player's current score.
     /// </summary>
-    [SerializeField] private IntVariable score;
+    [SerializeField] private ResettableIntVariable score;
 
     /// <summary>
     /// Flag for indicating if the game is running.

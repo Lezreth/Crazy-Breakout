@@ -7,12 +7,22 @@ using UnityEngine;
 /// </summary>
 public class BallControl : MonoBehaviour
 {
-    #region Serialized Variables
+    #region Scripted Variables
 
     /// <summary>
     /// The number of balls on the playing field.
     /// </summary>
-    [SerializeField] private IntVariable ballCount;
+    [SerializeField] private ResettableIntVariable ballCount;
+
+    /// <summary>
+    /// Multiplier for applying force to the ball.
+    /// </summary>
+    [SerializeField] private FloatConstant ballSpeedFactor;
+
+    /// <summary>
+    /// Direction to start moving in.
+    /// </summary>
+    [SerializeField] private Vector3Constant ballStartingVector;
 
     #endregion
     //---
@@ -27,6 +37,11 @@ public class BallControl : MonoBehaviour
     /// The rigid body component of this ball.  Used to control the ball's speed.
     /// </summary>
     private Rigidbody2D ballRigidBody = null;
+
+    /// <summary>
+    /// The material component of this ball.  Used to manipulate the color over this ball's lifetime.
+    /// </summary>
+    private Material ballMaterial = null;
 
     #endregion
     //---
@@ -47,6 +62,9 @@ public class BallControl : MonoBehaviour
     /// </summary>
     void Start()
     {
+        //  Get the sprite renderer's material so we can manipulate the color.
+        ballMaterial = GetComponent<SpriteRenderer>().material;
+
         //  Make note of the time this ball was spawned, because balls have a limited lifespan.
         startTime = Time.realtimeSinceStartup;
         ballRigidBody = GetComponent<Rigidbody2D>();
@@ -58,6 +76,9 @@ public class BallControl : MonoBehaviour
     /// </summary>
     void Update()
     {
+        float colorFactor = (20.0f - (Time.realtimeSinceStartup - startTime)) / 20;
+        ballMaterial.color = new(colorFactor, colorFactor, colorFactor);
+
         //  Destroy this ball if it is too old or has left the screen boundary.
         if (Time.realtimeSinceStartup - startTime > 20 || transform.position.y < ScreenUtils.ScreenBottom)
         {
@@ -80,7 +101,7 @@ public class BallControl : MonoBehaviour
     {
         //  But wait for one second before pushing it.
         yield return new WaitForSeconds(1);
-        ballRigidBody.AddForce(new(ConfigurationUtils.BallSpeedFactor, ConfigurationUtils.BallSpeedFactor), ForceMode2D.Impulse);
+        ballRigidBody.AddForce(ballStartingVector.Value * ballSpeedFactor.Value, ForceMode2D.Impulse);
     }
 
     /// <summary>

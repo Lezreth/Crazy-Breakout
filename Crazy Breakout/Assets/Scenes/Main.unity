@@ -544,6 +544,7 @@ MonoBehaviour:
   OnEndGame: {fileID: 11400000, guid: c778e267ba91aa44896bf148f8d3fc9d, type: 2}
   ballCount: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
   gameRunning: {fileID: 11400000, guid: 2014bebe5f3d818428b5311cf5fb46a8, type: 2}
+  paddleTag: {fileID: 11400000, guid: dd3e2483e0547d74591a96e543edf2a9, type: 2}
 --- !u!114 &808845614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +798,7 @@ MonoBehaviour:
   prefabBall: {fileID: 653076529749506551, guid: fb64aed537092a948b2b30011f372bc3, type: 3}
   OnSpawnNewBall: {fileID: 11400000, guid: 634d43664dbd95448a84f55eff4dae80, type: 2}
   ballCount: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
+  ballTag: {fileID: 11400000, guid: 07eb59da9fccf204ebfd48eeaf893856, type: 2}
 --- !u!4 &851815136
 Transform:
   m_ObjectHideFlags: 0
@@ -947,6 +949,100 @@ RectTransform:
   m_AnchoredPosition: {x: 1407, y: -715}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!1 &1512686152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512686154}
+  - component: {fileID: 1512686153}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &1512686153
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512686152}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 1
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1512686154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512686152}
+  m_LocalRotation: {x: 0.12146979, y: -0.21644688, z: 0.027151711, w: 0.96832776}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 14.3, y: -25.2, z: 0}
 --- !u!1 &1676380688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6af7486dcbfec140987ff6c02bd4628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabBrick: {fileID: 7509492992937362245, guid: a0d4f7a4484208545848763614160981, type: 3}
+  prefabBricks:
+  - {fileID: 7509492992937362245, guid: a0d4f7a4484208545848763614160981, type: 3}
+  - {fileID: 7509492992937362245, guid: 619bfd2192401e9498aaf5b4a1edcc01, type: 3}
+  - {fileID: 7509492992937362245, guid: 27393c487c475af40a0132da4817e1f3, type: 3}
+  - {fileID: 7509492992937362245, guid: 370e76e6aeee55d498af9800d4e7414e, type: 3}
+  brickBufferSpace: {fileID: 11400000, guid: b6fe166665cccd040bf8fb8b5f476727, type: 2}
+  brickTag: {fileID: 11400000, guid: 1fb71b87f3cdd84419556e897cf9998f, type: 2}
 --- !u!4 &1676380692
 Transform:
   m_ObjectHideFlags: 0
@@ -1181,7 +1283,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
-          m_ObjectArgumentAssemblyTypeName: IntVariable, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ResettableIntVariable, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1224,7 +1326,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: d145829c856c2d9438d3935a0a00ddb8, type: 2}
-          m_ObjectArgumentAssemblyTypeName: IntVariable, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ResettableIntVariable, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1252,7 +1354,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: ffe0e0048de0eb54a8d27a3fc9a83892, type: 2}
-          m_ObjectArgumentAssemblyTypeName: IntVariable, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ResettableIntVariable, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1280,7 +1382,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
-          m_ObjectArgumentAssemblyTypeName: IntVariable, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ResettableIntVariable, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

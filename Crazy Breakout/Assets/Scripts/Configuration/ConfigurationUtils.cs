@@ -2,46 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ConfigurationUtils
+public class ConfigurationUtils : MonoBehaviour
 {
+    #region Scriptable Objects
+
+    /// <summary>
+    /// List of the brick types that can be spawned.
+    /// </summary>
+    [SerializeField] private Dictionary<string, IntVariable> BrickPointValues;
+
+    #endregion
     #region Properties
 
     #endregion
     //---
-    #region Constants
-
-    /// <summary>
-    /// Padding between bricks so they are not jammed up against each other.
-    /// </summary>
-    public const float BrickBufferSpace = 0.1f;
-
-    /// <summary>
-    /// Tag identifier for the balls.
-    /// </summary>
-    public const string BallTag = "Ball";
-
-    /// <summary>
-    /// Tag identifier for the bricks.
-    /// </summary>
-    public const string BrickTag = "Brick";
-
-    /// <summary>
-    /// Tag identifier for the paddle.
-    /// </summary>
-    public const string PaddleTag = "Paddle";
-
-    /// <summary>
-    /// The default ball speed factor.
-    /// </summary>
-    public const float BallSpeedFactor = -3.0f;
+    #region Settings
 
     #endregion
     //---G
 
     /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    private void Awake()
+    {
+        try
+        {
+
+        }
+        catch (System.Exception)
+        {
+        }
+    }
+
+
+    /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
-    private static void Start()
+    private void Start()
     {
     }
 }

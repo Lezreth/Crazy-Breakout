@@ -191,4 +191,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8683e79fa881b43af563c1a86e7e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PaddleSpeedFactor: 7
+  paddleSpeedFactor: {fileID: 11400000, guid: af5e529729d46094f8a8f04aeb0bbdc3, type: 2}

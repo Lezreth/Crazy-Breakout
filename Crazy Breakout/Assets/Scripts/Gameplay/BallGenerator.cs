@@ -27,7 +27,12 @@ public class BallGenerator : MonoBehaviour
     /// <summary>
     /// Keeps track of the number of balls on the field.
     /// </summary>
-    [SerializeField] private IntVariable ballCount;
+    [SerializeField] private ResettableIntVariable ballCount;
+
+    /// <summary>
+    /// Tag for locating the balls on the field.
+    /// </summary>
+    [SerializeField] private StringConstant ballTag;
 
     #endregion
     //---
@@ -98,7 +103,7 @@ public class BallGenerator : MonoBehaviour
         ballSpawnerRunning = false;
 
         //  Find and destroy any balls that remain on the playing field.
-        GameObject[] balls = GameObject.FindGameObjectsWithTag(ConfigurationUtils.BallTag);
+        GameObject[] balls = GameObject.FindGameObjectsWithTag(ballTag.Value);
         if (balls.Length > 0)
         {
             for (int i = balls.Length - 1; i >= 0; i--)

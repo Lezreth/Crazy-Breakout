@@ -29,7 +29,7 @@ public class GameUI : MonoBehaviour
     /// Updates the UI with the player's score.
     /// </summary>
     /// <param name="score">The new score to display.</param>
-    public void UpdateScore(IntVariable score)
+    public void UpdateScore(ResettableIntVariable score)
     {
         scoreText.text = "Score: " + score.Value.ToString();
     }
@@ -38,7 +38,7 @@ public class GameUI : MonoBehaviour
     /// Updates the UI with the player's high score.
     /// </summary>
     /// <param name="highScore">The highest score the player has obtained.</param>
-    public void UpdateHighScore(IntVariable highScore)
+    public void UpdateHighScore(ResettableIntVariable highScore)
     {
         highScoreText.text = "High Score: " + highScore.Value.ToString();
     }
@@ -47,7 +47,7 @@ public class GameUI : MonoBehaviour
     /// Displays the number of balls that are on the field.
     /// </summary>
     /// <param name="BallsInPlay">The number of balls in play.</param>
-    public void UpdateBallsInPlay(IntVariable BallsInPlay)
+    public void UpdateBallsInPlay(ResettableIntVariable BallsInPlay)
     {
         ballsInPlay.text = "Balls Left: " + BallsInPlay.Value.ToString();
     }

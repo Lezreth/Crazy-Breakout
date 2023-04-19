@@ -12,7 +12,7 @@ public class PaddleControl : MonoBehaviour
     /// <summary>
     /// Multiplier for regulating the speed of the paddle.
     /// </summary>
-    [SerializeField] private float PaddleSpeedFactor = DefaultPaddleSpeedFactor;
+    [SerializeField] private FloatConstant paddleSpeedFactor;
 
     /// <summary>
     /// The width of the paddle.
@@ -26,11 +26,6 @@ public class PaddleControl : MonoBehaviour
 
     #endregion
     #region Constants
-
-    /// <summary>
-    /// The default paddle speed factor.
-    /// </summary>
-    private const float DefaultPaddleSpeedFactor = 7.0f;
 
     /// <summary>
     /// Half of the bounce angle range.
@@ -56,7 +51,7 @@ public class PaddleControl : MonoBehaviour
         float input = Input.GetAxis("Horizontal");
         if (input != 0)
         {
-            Vector3 newPosition = new(transform.position.x + (input * Time.deltaTime * PaddleSpeedFactor), transform.position.y, transform.position.z);
+            Vector3 newPosition = new(transform.position.x + (input * Time.deltaTime * paddleSpeedFactor.Value), transform.position.y, transform.position.z);
 
             if (newPosition.x > ScreenUtils.ScreenLeft + (paddleWidth / 2) && newPosition.x < ScreenUtils.ScreenRight - (paddleWidth / 2))
             {

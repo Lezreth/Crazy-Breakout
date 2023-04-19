@@ -162,4 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballCount: {fileID: 11400000, guid: 591ebbf046465fe46998e3d8f561cee8, type: 2}
+  ballSpeedFactor: {fileID: 11400000, guid: dc150cc6767ef5d4fb6cca4aaaffb0f4, type: 2}
+  ballStartingVector: {fileID: 11400000, guid: a2bf31a00ccc7de428c3d925aa666354, type: 2}
   OnBallDestroy: {fileID: 11400000, guid: 314bdf4178317a54b8536fd41fbc7e92, type: 2}
