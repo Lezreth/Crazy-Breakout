@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Brick : MonoBehaviour, IWeighted
+public class Brick : MonoBehaviour, IWeighted
 {
     #region Serialized Fields
 
@@ -37,7 +37,7 @@ public abstract class Brick : MonoBehaviour, IWeighted
     /// <summary>
     /// Event raised when a brick is destroyed.
     /// </summary>
-    [SerializeField] private GameEvent OnBrickDestroy;
+    [SerializeField] private GameEvent[] OnBrickDestroy;
 
     #endregion
     //***G
@@ -53,24 +53,28 @@ public abstract class Brick : MonoBehaviour, IWeighted
         {
             //  Perform brick type-specific behavior.
             BrickDestroyed();
-
-            //  TODO  Implement brick destruction - Make effects.
-
-            //  Add the value of this brick to the player's score.
-            score.Value += pointValue.Value;
-
-            //  Let any listeners know that this brick has been destroyed by a ball.
-            OnBrickDestroy.Raise();
-
-            //  Destroy this brick.
-            DestroyMe();
         }
     }
 
     /// <summary>
     /// Brick type-specific behavior to perform right before the brick is destroyed by being hit by a ball.
     /// </summary>
-    protected abstract void BrickDestroyed();
+    protected void BrickDestroyed()
+    {
+        //  TODO  Implement brick destruction - Make effects.
+
+        //  Add the value of this brick to the player's score.
+        score.Value += pointValue.Value;
+
+        //  Let any listeners know that this brick has been destroyed by a ball.
+        foreach (GameEvent e in OnBrickDestroy)
+        {
+            e.Raise();
+        }
+
+        //  Destroy this brick.
+        DestroyMe();
+    }
 
     /// <summary>
     /// Destroy this brick.  Destruction methods are 1) Being hit by a ball; 2) Game ends.

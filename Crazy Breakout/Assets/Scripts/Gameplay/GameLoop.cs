@@ -48,6 +48,25 @@ public class GameLoop : MonoBehaviour
     /// </summary>
     [SerializeField] private StringConstant paddleTag;
 
+    /// <summary>
+    /// Multiplier for altering the ball speed when the speedup brick is destroyed.
+    /// </summary>
+    [SerializeField] private FloatChoice ballSpeedMultiplier;
+
+    /// <summary>
+    /// How long the effects of special bricks should last.
+    /// </summary>
+    [SerializeField] private FloatConstant specialBrickEffectDuration;
+
+    #endregion
+    //---
+    #region Fields
+
+    /// <summary>
+    /// Time since the game start when the balls were last sped up.
+    /// </summary>
+    private float timeSinceBallSpeedup = 0.0f;
+
     #endregion
     //***G
 
@@ -83,6 +102,15 @@ public class GameLoop : MonoBehaviour
             gameRunning.Value = true;
             OnNewGame.Raise();
             SpawnPaddle();
+        }
+
+        //  The rest of the update needs to run only if a game is in session.
+        if (!gameRunning.Value) { return; }
+
+        //  Ball speedup effect lasts only a short while.
+        if (ballSpeedMultiplier.IsTrue && Time.realtimeSinceStartup - timeSinceBallSpeedup > specialBrickEffectDuration.Value)
+        {
+            ballSpeedMultiplier.IsTrue = false;
         }
     }
 
@@ -123,5 +151,14 @@ public class GameLoop : MonoBehaviour
         {
             Destroy(paddle);
         }
+    }
+
+    /// <summary>
+    /// Changes the value of the ball when the speedup brick is destroyed.
+    /// </summary>
+    public void OnSpeedupBrickDestroyed()
+    {
+        timeSinceBallSpeedup = Time.realtimeSinceStartup;
+        ballSpeedMultiplier.IsTrue = true;
     }
 }

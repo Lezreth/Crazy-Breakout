@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7224920923338527966}
   - component: {fileID: 1470318755374396107}
   - component: {fileID: 3594268099543820918}
-  - component: {fileID: 3456867790833339021}
+  - component: {fileID: -6399635511432669012}
   m_Layer: 0
   m_Name: Bonus Brick
   m_TagString: Brick
@@ -159,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3456867790833339021
+--- !u!114 &-6399635511432669012
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,10 +168,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7509492992937362245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84991faeb859cba4cbff0f5f912827b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8300502fd98051742afb1ef24923487f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 11400000, guid: ffe0e0048de0eb54a8d27a3fc9a83892, type: 2}
   weight: {fileID: 11400000, guid: 6cb51477baf364a4f9b0ca0f826299fd, type: 2}
   pointValue: {fileID: 11400000, guid: 37eedd88921a3d8468ac8b7bc0ab3058, type: 2}
-  OnBrickDestroy: {fileID: 11400000, guid: 78801c6b3ac8bc9488b055f9bbee8d94, type: 2}
+  OnBrickDestroy:
+  - {fileID: 11400000, guid: 78801c6b3ac8bc9488b055f9bbee8d94, type: 2}

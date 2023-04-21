@@ -15,14 +15,19 @@ public class BallControl : MonoBehaviour
     [SerializeField] private ResettableIntVariable ballCount;
 
     /// <summary>
+    /// Direction to start moving in.
+    /// </summary>
+    [SerializeField] private Vector3Constant ballStartingVector;
+
+    /// <summary>
     /// Multiplier for applying force to the ball.
     /// </summary>
     [SerializeField] private FloatConstant ballSpeedFactor;
 
     /// <summary>
-    /// Direction to start moving in.
+    /// Multiplier for changing the speed of the ball away from it's base speed.
     /// </summary>
-    [SerializeField] private Vector3Constant ballStartingVector;
+    [SerializeField] private FloatChoice ballSpeedMultiplier;
 
     #endregion
     //---
@@ -89,6 +94,15 @@ public class BallControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// LateUpdate is called after all Update functions have finished.
+    /// </summary>
+    private void LateUpdate()
+    {
+        //  Maintains a constant speed for the ball.  The ball is sped up when speedupBall is true.
+        ballRigidBody.velocity = ballSpeedMultiplier.Value * ballSpeedFactor.Value * ballRigidBody.velocity.normalized;
+    }
+
     #endregion
     //---G
     #region Methods
@@ -101,7 +115,8 @@ public class BallControl : MonoBehaviour
     {
         //  But wait for one second before pushing it.
         yield return new WaitForSeconds(1);
-        ballRigidBody.AddForce(ballStartingVector.Value * ballSpeedFactor.Value, ForceMode2D.Impulse);
+
+        ballRigidBody.velocity = Vector2.Lerp(ballRigidBody.velocity, ballStartingVector.Value * ballSpeedFactor.Value, 0.1f);
     }
 
     /// <summary>
@@ -110,9 +125,8 @@ public class BallControl : MonoBehaviour
     /// <param name="Direction">The new direction the ball should travel in.</param>
     public void SetDirection(Vector2 Direction)
     {
-        Rigidbody2D rigidBody2D = GetComponent<Rigidbody2D>();
-        float speed = rigidBody2D.velocity.magnitude;
-        rigidBody2D.velocity = Direction * speed;
+        float speed = ballRigidBody.velocity.magnitude;
+        ballRigidBody.velocity = Direction * speed;
     }
 
     #endregion

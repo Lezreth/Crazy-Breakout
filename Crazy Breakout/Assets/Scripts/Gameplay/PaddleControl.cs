@@ -24,6 +24,21 @@ public class PaddleControl : MonoBehaviour
     /// </summary>
     private float paddleHalfWidth;
 
+    /// <summary>
+    /// Flag for indicating if the paddle is frozen.
+    /// </summary>
+    private bool paddleFrozen = false;
+
+    /// <summary>
+    /// Time the paddle was frozen.
+    /// </summary>
+    private float frozenTime = 0.0f;
+
+    /// <summary>
+    /// The material component for changing the paddle's color.
+    /// </summary>
+    private Material paddleMaterial = null;
+
     #endregion
     #region Constants
 
@@ -39,6 +54,7 @@ public class PaddleControl : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        paddleMaterial = GetComponent<SpriteRenderer>().material;
         paddleWidth = GetComponent<PolygonCollider2D>().bounds.size.x;
         paddleHalfWidth = paddleWidth / 2;
     }
@@ -48,8 +64,9 @@ public class PaddleControl : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        //  Move the paddle left/right according to the player's input.
         float input = Input.GetAxis("Horizontal");
-        if (input != 0)
+        if (input != 0 && !paddleFrozen)
         {
             Vector3 newPosition = new(transform.position.x + (input * Time.deltaTime * paddleSpeedFactor.Value), transform.position.y, transform.position.z);
 
@@ -57,6 +74,13 @@ public class PaddleControl : MonoBehaviour
             {
                 transform.position = newPosition;
             }
+        }
+
+        //  Thaw the paddle after its duration has elapsed.
+        if (paddleFrozen && Time.realtimeSinceStartup - frozenTime > 2)
+        {
+            paddleFrozen = false;
+            paddleMaterial.color = new(1, 1, 1);
         }
     }
 
@@ -84,5 +108,15 @@ public class PaddleControl : MonoBehaviour
             //  Tell the ball to change direction.
             collision.gameObject.GetComponent<BallControl>().SetDirection(bounceDirection);
         }
+    }
+
+    /// <summary>
+    /// Freeze the paddle.
+    /// </summary>
+    public void FreezePaddle()
+    {
+        frozenTime = Time.realtimeSinceStartup;
+        paddleFrozen = true;
+        paddleMaterial.color = new(0, 0, 0);
     }
 }

@@ -11,7 +11,7 @@ public class GameEvent : ScriptableObject
     /// <summary>
     /// The list of GameEventListeners that will subscribe to this GameEvent.
     /// </summary>
-    private List<GameEventListener> listeners = new List<GameEventListener>();
+    private List<GameEventListener> listeners = new();
 
     /// <summary>
     /// Invokes all of the subscribers to this GameEvent.

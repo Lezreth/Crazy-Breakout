@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3184630308275203833}
   - component: {fileID: 3298917478288183154}
   - component: {fileID: 7559536673991862207}
+  - component: {fileID: -6694932934676055838}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Paddle
@@ -192,3 +193,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paddleSpeedFactor: {fileID: 11400000, guid: af5e529729d46094f8a8f04aeb0bbdc3, type: 2}
+--- !u!114 &-6694932934676055838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029730734372288398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a12291a29d704592aa19b6f4b639c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: dc7c8ead13a8da74b98e6dc02d5808de, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7559536673991862207}
+        m_TargetAssemblyTypeName: PaddleControl, Assembly-CSharp
+        m_MethodName: FreezePaddle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
